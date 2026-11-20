@@ -1,0 +1,12 @@
+node_modules/
+build/
+Payload/
+*.ipa
+ios/App/App/public/
+ios/App/App/capacitor.config.json
+ios/App/App/config.xml
+ios/capacitor-cordova-ios-plugins/
+ios/App/CapApp-SPM/.build/
+DerivedData/
+xcuserdata/
+.DS_Store

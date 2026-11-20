@@ -1,0 +1,16 @@
+{
+  "name": "xmcrm-ios",
+  "version": "1.0.0",
+  "private": true,
+  "description": "XM CRM — iPhone/iPad ilovasi (xmcrm.uz ni ichida ochadi)",
+  "scripts": {
+    "sync": "cap sync ios"
+  },
+  "dependencies": {
+    "@capacitor/core": "8.6.2",
+    "@capacitor/ios": "8.6.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.6.2"
+  }
+}

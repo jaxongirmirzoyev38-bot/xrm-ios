@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+<title>XM CRM — ulanish yo'q</title>
+<style>
+  :root { color-scheme: light; }
+  body { margin: 0; min-height: 100dvh; padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom); box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-family: -apple-system, "Segoe UI", Inter, Arial, sans-serif; background: #fafaf9; color: #1c1917; }
+  .card { text-align: center; max-width: 420px; padding: 32px; }
+  .logo { width: 72px; height: 72px; border-radius: 18px; background: #f46d1b; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; }
+  .logo span { width: 22px; height: 40px; border: 5px solid #fff; border-radius: 6px; display: block; }
+  h1 { font-size: 20px; margin: 0 0 8px; }
+  p { color: #57534e; font-size: 14px; line-height: 1.5; margin: 0 0 20px; }
+  button { background: #f46d1b; color: #fff; border: 0; border-radius: 12px; padding: 12px 22px; font-size: 14px; font-weight: 700; cursor: pointer; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; margin-right: 6px; animation: p 1.2s infinite; }
+  @keyframes p { 50% { opacity: .3; } }
+  small { display: block; margin-top: 16px; color: #a8a29e; font-size: 12px; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo"><span></span></div>
+    <h1>Internetga ulanib bo‘lmadi</h1>
+    <p>XM CRM serveriga ulanish yo‘q. Internetni tekshiring — ulanish tiklanishi bilan dastur o‘zi qayta ochiladi.</p>
+    <button onclick="go()">Qayta urinish</button>
+    <small><span class="dot"></span>Har 10 soniyada avtomatik urinilmoqda…</small>
+  </div>
+  <script>
+    var URL_ = 'https://xmcrm.uz';
+    function go() { location.href = URL_; }
+    // Internet qaytishi bilan o'zi qayta ochiladi
+    window.addEventListener('online', go);
+    setInterval(function () {
+      fetch(URL_ + '/api/health', { cache: 'no-store', mode: 'no-cors' }).then(go).catch(function () {});
+    }, 8000);
+  </script>
+</body>
+</html>

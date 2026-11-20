@@ -1,0 +1,75 @@
+name: iOS .ipa (imzosiz)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ios-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Eng yangi Xcode'ni tanlash
+        run: |
+          ls -d /Applications/Xcode*.app
+          XC=$(ls -d /Applications/Xcode_*.app | grep -v -i beta | sort -V | tail -1)
+          echo "Tanlandi: $XC"
+          sudo xcode-select -s "$XC/Contents/Developer"
+          xcodebuild -version
+
+      - name: Paketlar
+        run: npm ci --no-audit --no-fund
+
+      - name: Capacitor sync
+        run: npx cap sync ios
+
+      - name: Yig'ish (imzosiz)
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project ios/App/App.xcodeproj \
+            -scheme App \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            -skipPackagePluginValidation \
+            MARKETING_VERSION=1.0.${{ github.run_number }} \
+            CURRENT_PROJECT_VERSION=${{ github.run_number }} \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            build | tail -n 80
+
+      - name: .ipa qilish
+        run: |
+          APP=build/Build/Products/Release-iphoneos/App.app
+          test -d "$APP"
+          rm -rf Payload && mkdir Payload && cp -R "$APP" Payload/
+          zip -qry XM-CRM.ipa Payload
+          ls -la XM-CRM.ipa
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: XM-CRM-ipa
+          path: XM-CRM.ipa
+
+      - name: Release'ga joylash (doimiy yuklab olish havolasi)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG=v1.0.${{ github.run_number }}
+          gh release create "$TAG" XM-CRM.ipa --title "XM CRM iOS $TAG" --notes "Imzosiz .ipa — Sideloadly / AltStore orqali o'z Apple ID bilan o'rnating." --latest

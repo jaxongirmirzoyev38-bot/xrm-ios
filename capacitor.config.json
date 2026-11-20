@@ -1,0 +1,18 @@
+{
+  "appId": "uz.xmcrm.app",
+  "appName": "XM CRM",
+  "webDir": "www",
+  "server": {
+    "url": "https://xmcrm.uz",
+    "errorPath": "offline.html",
+    "allowNavigation": ["xmcrm.uz", "*.xmcrm.uz"]
+  },
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#fafaf9",
+    "appendUserAgent": "XMCRM-iOS",
+    "allowsLinkPreview": false,
+    "scrollEnabled": true,
+    "limitsNavigationsToAppBoundDomains": false
+  }
+}
