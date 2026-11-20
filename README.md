@@ -8,7 +8,14 @@ Qo'lda ishga tushirish: **Actions → iOS .ipa → Run workflow**.
 
 ## iPhone'ga o'rnatish (bepul, o'z Apple ID bilan)
 - **Windows / macOS:** [Sideloadly](https://sideloadly.io). iPhone'ni kabel bilan ulang, `XM-CRM.ipa` ni tanlang, Apple ID kiriting, **Start** bosing.
-- **Linux:** [Sideloader](https://github.com/Dadoum/Sideloader) (yoki AltServer-Linux).
+- **Linux (Kali):** Impactor
+  ```bash
+  sudo apt install -y flatpak usbmuxd
+  flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  flatpak install -y flathub dev.khcrysalis.PlumeImpactor
+  flatpak run dev.khcrysalis.PlumeImpactor
+  ```
+  iPhone'ni kabel bilan ulang ("Bu kompyuterga ishonasizmi?" → **Ishonish**), Apple ID bilan kiring, `XM-CRM.ipa` ni tanlab o'rnating.
 - iPhone'da: **Sozlamalar → Umumiy → VPN va qurilmalarni boshqarish** bo'limida Apple ID'ingizga **Ishonish** ni bosing.
 - iOS 16+ da: **Sozlamalar → Maxfiylik va xavfsizlik → Dasturchi rejimi → Yoqish** (telefon qayta yuklanadi).
 - Bepul Apple ID bilan ilova **7 kun** ishlaydi, keyin Sideloadly bilan qayta o'rnatiladi. Login va ma'lumotlar saqlanib qoladi.
